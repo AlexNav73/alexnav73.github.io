@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-    <title> - open source</title>
-    <link href="https://alexnav73.github.io/tags/open-source/atom.xml" rel="self" type="application/atom+xml"/>
+    <title> - C#</title>
+    <link href="https://alexnav73.github.io/categories/c/atom.xml" rel="self" type="application/atom+xml"/>
     <link href="https://alexnav73.github.io"/>
     <generator uri="https://www.getzola.org/">Zola</generator>
     <updated>2023-03-16T00:00:00+00:00</updated>
-    <id>https://alexnav73.github.io/tags/open-source/atom.xml</id>
+    <id>https://alexnav73.github.io/categories/c/atom.xml</id>
     <entry xml:lang="en">
         <title>Release of Navitski.Crystalized.Model</title>
         <published>2023-03-16T00:00:00+00:00</published>

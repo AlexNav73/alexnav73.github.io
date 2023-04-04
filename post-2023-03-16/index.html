@@ -60,7 +60,7 @@
         <circle cx="16" cy="16" r="14"/>
         <path d="M16 8 L16 16 20 20"/>
     </svg>
-    <span>1 minute read</span>
+    <span>2 minute read</span>
     <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32"
          width="16" height="16" fill="none" stroke="currentcolor"
          stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
@@ -71,7 +71,14 @@
 </span>
     </header>
     <div itemprop="articleBody">
-      <p><code>Navitski.Crystalized.Model</code> is a set of cross-platform libraries which helps to build  your own domain model. They are providing building blocks to implement your own domain model which, from the birds-eye view, will look like on the following diagram:</p>
+      <p>Welcome to the series of posts, describing the library, I've been working on for a couple of years. It's name is <code>Navitski.Crystalized.Model</code>.</p>
+<h2 id="history">History</h2>
+<p>A couple of years ago, I started to work on the budget management application. It was a toy project which supposed to help me to practice skills in developing software architecture and give me an opportunity to learn, how to develop applications from the scratch. So, I decided to use Hexagonal architecture. According to the Wikipedia:</p>
+<blockquote>
+<p>The hexagonal architecture, or ports and adapters architecture, is an architectural pattern used in software design. It aims at creating loosely coupled application components that can be easily connected to their software environment by means of ports and adapters. This makes components exchangeable at any level and facilitates test automation.</p>
+</blockquote>
+<img class="center" src="&#x2F;Hexagonal_Architecture.svg"  width="400" />
+<p>In this architecture, Domain model is a core of application which contains all business logic inside and has no external dependencies. The only things available outside are &quot;ports&quot;. Ports are most often understood as services which can be used to query and modify the domain model.</p>
 <div class="mermaid">
 flowchart LR
     subgraph Application
@@ -84,7 +91,6 @@ flowchart LR
         domainModel --&gt; shard2[Model Shard 2]
     end
 </div>
-<p>The entry point of the model is a class, which inherits <code>DomainModel</code> abstract class and contains a collection of model shards. Model shard is a way to split data into pieces by purpose or by business domain boundary. Domain Model collects all model shards </p>
 
     </div>
 
@@ -96,8 +102,11 @@ flowchart LR
                     Published by Aliaksandr Navitski
                 
                 
-                
                     
+                    in <a href="https://alexnav73.github.io/categories/c/">C#</a>
+                
+                
+                    and
                     tagged
                     
                         <a href="https://alexnav73.github.io/tags/domain-model/">domain model</a>
