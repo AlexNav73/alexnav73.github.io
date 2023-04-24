@@ -60,7 +60,7 @@
         <circle cx="16" cy="16" r="14"/>
         <path d="M16 8 L16 16 20 20"/>
     </svg>
-    <span>2 minute read</span>
+    <span>3 minute read</span>
     <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32"
          width="16" height="16" fill="none" stroke="currentcolor"
          stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
@@ -72,13 +72,28 @@
     </header>
     <div itemprop="articleBody">
       <p>Welcome to the series of posts, describing the library, I've been working on for a couple of years. It's name is <code>Navitski.Crystalized.Model</code>.</p>
-<h2 id="history">History</h2>
-<p>A couple of years ago, I started to work on the budget management application. It was a toy project which supposed to help me to practice skills in developing software architecture and give me an opportunity to learn, how to develop applications from the scratch. So, I decided to use Hexagonal architecture. According to the Wikipedia:</p>
+<p>A couple of years ago, I started to work on the budget management application. It was a toy project which supposed to help me to practice skills in developing software architecture and give me an opportunity to learn, how to develop applications from the scratch.</p>
+<h2 id="architecture">Architecture</h2>
+<p>I wanted to build my project on a solid foundation so architecture for me was a very important topic. I've heard a lot about DDD so I decided to give it a try and use Hexagonal architecture. According to the Wikipedia:</p>
 <blockquote>
 <p>The hexagonal architecture, or ports and adapters architecture, is an architectural pattern used in software design. It aims at creating loosely coupled application components that can be easily connected to their software environment by means of ports and adapters. This makes components exchangeable at any level and facilitates test automation.</p>
 </blockquote>
+<p>So the core of our application will be a domain model, which has no external dependencies and provide some interfaces which will be used to contact the outside world. For example, a domain model wants to read data and modify it using some business rules. To archive that domain model have an interface called, for example, <code>IDataSource</code> with method <code>Read</code>. When this domain model will be integrated into the application <code>IDataSource</code> interface will be implemented by some of the infrastructure modules. Domain model will never know, from where data came from, it will only use its <code>IDataSource</code> interface. In the following picture, you can see what the Hexagonal architecture looks like: </p>
 <img class="center" src="&#x2F;Hexagonal_Architecture.svg"  width="400" />
-<p>In this architecture, Domain model is a core of application which contains all business logic inside and has no external dependencies. The only things available outside are &quot;ports&quot;. Ports are most often understood as services which can be used to query and modify the domain model.</p>
+<p>All right, we know how to make a call to the databases, send requests to internal systems etc. But how to handle an application state, how to create and handle domain model. In terms of desktop applications or mobile applications, domain model should have a number of traits, such as: ability to undo or redo changes made on that domain model, keep application state consistent when an exception is thrown, ability to save and load whole domain model to file or database, be able to notify the rest of application when domain model is changed and provide detailed definition of changes and so on. </p>
+<h2 id="solution">Solution</h2>
+<p>To solve such problems, I've built the <code>Navitski.Crystalized.Model</code> library. It gives you all you need to easily create your domain models that will have the following features:</p>
+<ul>
+<li>Undo/Redo support.</li>
+<li>Saving/Loading your domain model to the SQLite database or Json file (more storage options can be added quite easily). No need to write all the database logic yourself.</li>
+<li>Precise changes tracker which will tell you exactly what was changed (no need to parse the whole domain model graph by yourself).</li>
+<li>Everything is strongly typed (the source generator will generate everything for you).</li>
+<li>The library and source generator are targeting .NET Standard and .NET 7 so you can use it in the old .NET Framework projects.</li>
+<li>No 3rd party dependencies.</li>
+<li>DI friendliness (you can register all classes into DI container of your choice)</li>
+<li>Easy to use with plugins (plugins can provide their data which will be integrated into the application state).</li>
+<li>Resilience (application state will not be corrupted by exceptions thrown in the middle of modification).</li>
+</ul>
 <div class="mermaid">
 flowchart LR
     subgraph Application

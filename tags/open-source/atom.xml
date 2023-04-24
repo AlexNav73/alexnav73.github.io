@@ -16,13 +16,28 @@
         <link rel="alternate" href="https://alexnav73.github.io/post-2023-03-16/" type="text/html"/>
         <id>https://alexnav73.github.io/post-2023-03-16/</id>
         <content type="html">&lt;p&gt;Welcome to the series of posts, describing the library, I&#x27;ve been working on for a couple of years. It&#x27;s name is &lt;code&gt;Navitski.Crystalized.Model&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
-&lt;h2 id=&quot;history&quot;&gt;History&lt;&#x2F;h2&gt;
-&lt;p&gt;A couple of years ago, I started to work on the budget management application. It was a toy project which supposed to help me to practice skills in developing software architecture and give me an opportunity to learn, how to develop applications from the scratch. So, I decided to use Hexagonal architecture. According to the Wikipedia:&lt;&#x2F;p&gt;
+&lt;p&gt;A couple of years ago, I started to work on the budget management application. It was a toy project which supposed to help me to practice skills in developing software architecture and give me an opportunity to learn, how to develop applications from the scratch.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;architecture&quot;&gt;Architecture&lt;&#x2F;h2&gt;
+&lt;p&gt;I wanted to build my project on a solid foundation so architecture for me was a very important topic. I&#x27;ve heard a lot about DDD so I decided to give it a try and use Hexagonal architecture. According to the Wikipedia:&lt;&#x2F;p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;The hexagonal architecture, or ports and adapters architecture, is an architectural pattern used in software design. It aims at creating loosely coupled application components that can be easily connected to their software environment by means of ports and adapters. This makes components exchangeable at any level and facilitates test automation.&lt;&#x2F;p&gt;
 &lt;&#x2F;blockquote&gt;
+&lt;p&gt;So the core of our application will be a domain model, which has no external dependencies and provide some interfaces which will be used to contact the outside world. For example, a domain model wants to read data and modify it using some business rules. To archive that domain model have an interface called, for example, &lt;code&gt;IDataSource&lt;&#x2F;code&gt; with method &lt;code&gt;Read&lt;&#x2F;code&gt;. When this domain model will be integrated into the application &lt;code&gt;IDataSource&lt;&#x2F;code&gt; interface will be implemented by some of the infrastructure modules. Domain model will never know, from where data came from, it will only use its &lt;code&gt;IDataSource&lt;&#x2F;code&gt; interface. In the following picture, you can see what the Hexagonal architecture looks like: &lt;&#x2F;p&gt;
 &lt;img class=&quot;center&quot; src=&quot;&amp;#x2F;Hexagonal_Architecture.svg&quot;  width=&quot;400&quot; &#x2F;&gt;
-&lt;p&gt;In this architecture, Domain model is a core of application which contains all business logic inside and has no external dependencies. The only things available outside are &amp;quot;ports&amp;quot;. Ports are most often understood as services which can be used to query and modify the domain model.&lt;&#x2F;p&gt;
+&lt;p&gt;All right, we know how to make a call to the databases, send requests to internal systems etc. But how to handle an application state, how to create and handle domain model. In terms of desktop applications or mobile applications, domain model should have a number of traits, such as: ability to undo or redo changes made on that domain model, keep application state consistent when an exception is thrown, ability to save and load whole domain model to file or database, be able to notify the rest of application when domain model is changed and provide detailed definition of changes and so on. &lt;&#x2F;p&gt;
+&lt;h2 id=&quot;solution&quot;&gt;Solution&lt;&#x2F;h2&gt;
+&lt;p&gt;To solve such problems, I&#x27;ve built the &lt;code&gt;Navitski.Crystalized.Model&lt;&#x2F;code&gt; library. It gives you all you need to easily create your domain models that will have the following features:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Undo&#x2F;Redo support.&lt;&#x2F;li&gt;
+&lt;li&gt;Saving&#x2F;Loading your domain model to the SQLite database or Json file (more storage options can be added quite easily). No need to write all the database logic yourself.&lt;&#x2F;li&gt;
+&lt;li&gt;Precise changes tracker which will tell you exactly what was changed (no need to parse the whole domain model graph by yourself).&lt;&#x2F;li&gt;
+&lt;li&gt;Everything is strongly typed (the source generator will generate everything for you).&lt;&#x2F;li&gt;
+&lt;li&gt;The library and source generator are targeting .NET Standard and .NET 7 so you can use it in the old .NET Framework projects.&lt;&#x2F;li&gt;
+&lt;li&gt;No 3rd party dependencies.&lt;&#x2F;li&gt;
+&lt;li&gt;DI friendliness (you can register all classes into DI container of your choice)&lt;&#x2F;li&gt;
+&lt;li&gt;Easy to use with plugins (plugins can provide their data which will be integrated into the application state).&lt;&#x2F;li&gt;
+&lt;li&gt;Resilience (application state will not be corrupted by exceptions thrown in the middle of modification).&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
 &lt;div class=&quot;mermaid&quot;&gt;
 flowchart LR
     subgraph Application
